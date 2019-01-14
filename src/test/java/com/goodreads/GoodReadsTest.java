@@ -4,10 +4,14 @@ import com.goodreads.api.GoodReadsAPI;
 import com.goodreads.verification.ResponseVerification;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 
+@Feature("Goodreads endpoints")
+@Story("Goodreads endpoints should work correctly")
 public class GoodReadsTest {
     @Test(description = "Verify author search")
     public void verifyGoodReadsAuthorSearch() {
