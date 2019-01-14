@@ -1,0 +1,63 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "io.qameta.allure:allure-gradle:2.5"
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.4.1'
+    id 'application'
+    id("io.qameta.allure") version "2.5"
+}
+
+group 'com.epam'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.15'
+    testCompile group: 'org.testng', name: 'testng', version: '6.9.10'
+    compile group: 'com.jayway.restassured', name: 'rest-assured', version: '2.9.0'
+    compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+    compile group: 'io.qameta.allure', name: 'allure-java-commons', version: '2.0-BETA5'
+    compile group: 'com.github.scribejava', name: 'scribejava-apis', version: '5.5.0'
+
+}
+
+allure {
+    version = '2.8.1'
+    autoconfigure = true
+    aspectjweaver = true
+    allureJavaVersion = '1.8'
+    useTestNG {
+        version = '2.8.1'
+    }
+}
+
+intellij {
+    version '2018.2.5'
+}
+patchPluginXml {
+    changeNotes """
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>"""
+}
+
+
+test.dependsOn 'cleanTest'
+
+test {
+    useTestNG() {
+        useDefaultListeners = true
+        suites 'src/test/resources/GoodReadsSuite.xml'
+    }
+}
