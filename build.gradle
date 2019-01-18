@@ -30,6 +30,8 @@ dependencies {
     compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
     compile group: 'io.qameta.allure', name: 'allure-java-commons', version: '2.0-BETA5'
     compile group: 'com.github.scribejava', name: 'scribejava-apis', version: '5.5.0'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
 
 }
 
@@ -52,9 +54,8 @@ patchPluginXml {
       <em>most HTML tags may be used</em>"""
 }
 
-
-test.dependsOn 'cleanTest'
-
+test.dependsOn("cleanTest")
+test.finalizedBy("allureServe")
 test {
     useTestNG() {
         useDefaultListeners = true

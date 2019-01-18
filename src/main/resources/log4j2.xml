@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" name="GoodReadsTests" packages="">
+    <Appenders>
+        <Console name="consoleOut" target="SYSTEM_OUT">
+            <PatternLayout pattern="%m%n"/>
+        </Console>
+        <File name="fileOut" fileName="/log/error.log">
+            <PatternLayout pattern="%m%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="all">
+            <AppenderRef ref="fileOut"/>
+        </Root>
+    </Loggers>
+</Configuration>
