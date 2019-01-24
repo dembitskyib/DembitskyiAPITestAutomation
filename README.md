@@ -3,4 +3,4 @@
 `gradle test`
 ### GENERATE ALLURE REPORT FROM .JSON
 - move to the 'build' directory
-- command `allure serve`
+- `allure serve`
