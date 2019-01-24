@@ -2,6 +2,7 @@ package com.goodreads.api.controllers;
 
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
+import io.qameta.allure.Allure;
 
 import java.util.Collections;
 import java.util.Map;
@@ -20,12 +21,14 @@ public class RequestController {
     }
 
     public Response get(String url, Map<String, ?> queryParams) {
-        return given()
+        Response response = given()
                 .specification(requestSpecification)
                 .queryParameters(queryParams)
                 .when()
                 .get(url)
                 .then()
                 .extract().response();
+        Allure.addAttachment("Response body", "text/xml", response.getBody().asString());
+        return response;
     }
 }

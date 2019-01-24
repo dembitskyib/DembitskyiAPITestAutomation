@@ -6,7 +6,6 @@ import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -28,10 +27,8 @@ public class GoodReadsAPI {
     }
 
     public Response getAuthorById(int authorId) {
-        Response response = new RequestController(requestSpecification).get("/author/show.xml",
+        return new RequestController(requestSpecification).get("/author/show.xml",
                 Collections.singletonMap("id", authorId));
-        Allure.addAttachment("Response body", "text/xml", response.getBody().asString());
-        return response;
     }
 
     public Response getAuthorSeries(int authorId) {

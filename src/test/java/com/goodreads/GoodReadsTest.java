@@ -1,6 +1,8 @@
 package com.goodreads;
 
 import com.goodreads.api.GoodReadsAPI;
+import com.goodreads.dataproviders.GoodReadsDataProviderFactory;
+import com.goodreads.utils.listeners.GoodReadsTestListener;
 import com.goodreads.verification.ResponseVerification;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
@@ -8,18 +10,21 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+@Listeners(GoodReadsTestListener.class)
 @Feature("Goodreads endpoints")
 @Story("Goodreads endpoints should work correctly")
 public class GoodReadsTest {
-    @Test(description = "Verify author search")
-    public void verifyGoodReadsAuthorSearch() {
+    @Test(description = "Verify author search %s %s",
+            dataProvider = "createAuthorSearchData", dataProviderClass = GoodReadsDataProviderFactory.class)
+    public void verifyGoodReadsAuthorSearch(String xmlMapping, String expectedData) {
         Response response = new GoodReadsAPI().getAuthorById(12);
         new ResponseVerification(response)
                 .verifyStatusCode(HttpStatus.SC_OK)
                 .verifyContentType(ContentType.XML)
-                .verifyResponseData("GoodreadsResponse.author.id", Matchers.equalTo("12"));
+                .verifyResponseData(xmlMapping, Matchers.equalTo(expectedData));
     }
 
     @Test(description = "Verify author series search")
