@@ -3,7 +3,7 @@ package com.goodreads.allure;
 import com.jayway.restassured.response.Response;
 import io.qameta.allure.Attachment;
 
-public class AttachmentController {
+public class AllureAttachmentController {
 
     @SuppressWarnings({"UnusedReturnValue", "unused"})
     @Attachment(value = "{name}", type = "text/xml")

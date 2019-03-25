@@ -1,6 +1,6 @@
 package com.goodreads;
 
-import com.goodreads.allure.EnvironmentController;
+import com.goodreads.allure.AllureEnvironmentController;
 import com.goodreads.api.API;
 import com.goodreads.api.GoodReadsAPI;
 import com.goodreads.dataproviders.GoodReadsDataProviderFactory;
@@ -23,11 +23,6 @@ public class GoodReadsTest {
 
     @BeforeClass
     public void setupAPI() {
-        new EnvironmentController()
-                .setupEnvironmentName("1")
-                .setupEnvironmentVersion("2")
-                .setupEndpointAPI("3")
-                .createPropertyFile();
         goodReadsAPI = new GoodReadsAPI();
     }
 
@@ -72,8 +67,7 @@ public class GoodReadsTest {
 
     @AfterClass
     public void createPropertyFile() {
-        new EnvironmentController()
-                .loadPropertyFile()
+        new AllureEnvironmentController()
                 .createPropertyFile();
     }
 

@@ -1,6 +1,6 @@
 package com.goodreads.api.controllers;
 
-import com.goodreads.allure.AttachmentController;
+import com.goodreads.allure.AllureAttachmentController;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 import io.qameta.allure.Step;
@@ -31,7 +31,7 @@ public class RequestController {
                 .get(url)
                 .then()
                 .extract().response();
-        AttachmentController.attachXmlResponse("Response body", response);
+        AllureAttachmentController.attachXmlResponse("Response body", response);
         return response;
     }
 
