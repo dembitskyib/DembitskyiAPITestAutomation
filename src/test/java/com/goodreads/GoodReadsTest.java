@@ -1,5 +1,6 @@
 package com.goodreads;
 
+import com.goodreads.allure.EnvironmentController;
 import com.goodreads.api.API;
 import com.goodreads.api.GoodReadsAPI;
 import com.goodreads.dataproviders.GoodReadsDataProviderFactory;
@@ -11,9 +12,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 @Listeners(GoodReadsTestListener.class)
 @Feature("Goodreads endpoints")
@@ -24,6 +23,11 @@ public class GoodReadsTest {
 
     @BeforeClass
     public void setupAPI() {
+        new EnvironmentController()
+                .setupEnvironmentName("1")
+                .setupEnvironmentVersion("2")
+                .setupEndpointAPI("3")
+                .createPropertyFile();
         goodReadsAPI = new GoodReadsAPI();
     }
 
@@ -64,6 +68,13 @@ public class GoodReadsTest {
                 .verifyStatusCode(HttpStatus.SC_OK)
                 .verifyContentType(ContentType.XML)
                 .verifyResponseData("GoodreadsResponse.book.id", Matchers.equalTo("1"));
+    }
+
+    @AfterClass
+    public void createPropertyFile() {
+        new EnvironmentController()
+                .loadPropertyFile()
+                .createPropertyFile();
     }
 
 }
