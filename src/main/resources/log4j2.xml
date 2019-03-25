@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="warn" name="GoodReadsTests" packages="">
+<Configuration status="ALL">
     <Appenders>
-        <Console name="consoleOut" target="SYSTEM_OUT">
-            <PatternLayout pattern="%m%n"/>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
-        <File name="fileOut" fileName="/log/error.log">
-            <PatternLayout pattern="%m%n"/>
-        </File>
     </Appenders>
     <Loggers>
         <Root level="all">
-            <AppenderRef ref="fileOut"/>
+            <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
 </Configuration>

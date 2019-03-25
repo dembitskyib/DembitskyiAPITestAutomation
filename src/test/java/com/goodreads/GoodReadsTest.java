@@ -1,5 +1,6 @@
 package com.goodreads;
 
+import com.goodreads.api.API;
 import com.goodreads.api.GoodReadsAPI;
 import com.goodreads.dataproviders.GoodReadsDataProviderFactory;
 import com.goodreads.utils.listeners.GoodReadsTestListener;
@@ -10,6 +11,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -17,10 +19,19 @@ import org.testng.annotations.Test;
 @Feature("Goodreads endpoints")
 @Story("Goodreads endpoints should work correctly")
 public class GoodReadsTest {
-    @Test(description = "Verify author search %s %s",
+
+    private API goodReadsAPI;
+
+    @BeforeClass
+    public void setupAPI() {
+        goodReadsAPI = new GoodReadsAPI();
+    }
+
+
+    @Test(description = "Verify author search (input: %s; mapping: %s output: %s)",
             dataProvider = "createAuthorSearchData", dataProviderClass = GoodReadsDataProviderFactory.class)
-    public void verifyGoodReadsAuthorSearch(String xmlMapping, String expectedData) {
-        Response response = new GoodReadsAPI().getAuthorById(12);
+    public void verifyGoodReadsAuthorSearch(String inputData, String xmlMapping, String expectedData) {
+        Response response = goodReadsAPI.getAuthorById(inputData);
         new ResponseVerification(response)
                 .verifyStatusCode(HttpStatus.SC_OK)
                 .verifyContentType(ContentType.XML)
@@ -29,7 +40,7 @@ public class GoodReadsTest {
 
     @Test(description = "Verify author series search")
     public void verifyGoodReadsAuthorSeriesSearch() {
-        Response response = new GoodReadsAPI().getAuthorSeries(12);
+        Response response = goodReadsAPI.getAuthorSeries("12");
         new ResponseVerification(response)
                 .verifyStatusCode(HttpStatus.SC_OK)
                 .verifyContentType(ContentType.XML)
@@ -38,7 +49,7 @@ public class GoodReadsTest {
 
     @Test(description = "Verify book search")
     public void verifyGoodReadsBookSearch() {
-        Response response = new GoodReadsAPI().findBook("Thinking in java");
+        Response response = goodReadsAPI.findBook("Thinking in java");
         new ResponseVerification(response)
                 .verifyStatusCode(HttpStatus.SC_OK)
                 .verifyContentType(ContentType.XML)
@@ -48,7 +59,7 @@ public class GoodReadsTest {
 
     @Test(description = "Verify book reviews search")
     public void verifyGoodReadsBookReviewsSearch() {
-        Response response = new GoodReadsAPI().getBookReviews(1);
+        Response response = goodReadsAPI.getBookReviews("1");
         new ResponseVerification(response)
                 .verifyStatusCode(HttpStatus.SC_OK)
                 .verifyContentType(ContentType.XML)

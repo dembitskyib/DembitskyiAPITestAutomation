@@ -5,17 +5,14 @@ import com.jayway.restassured.builder.RequestSpecBuilder;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
-import io.qameta.allure.Allure;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 
 import java.util.Collections;
 
-public class GoodReadsAPI {
+public class GoodReadsAPI implements API {
+
     private static final String BASE_URL = "https://www.goodreads.com";
     private static final String KEY = "4N4AX9WSYK4Bd2LGuKgPA";
     private static final ContentType CONTENT_TYPE = ContentType.XML;
-    private static final Logger logger = LogManager.getLogger(GoodReadsAPI.class);
     private static RequestSpecification requestSpecification;
 
     static {
@@ -26,13 +23,16 @@ public class GoodReadsAPI {
                 .build();
     }
 
-    public Response getAuthorById(int authorId) {
+    public GoodReadsAPI() {
+    }
+
+    public Response getAuthorById(String authorId) {
         return new RequestController(requestSpecification).get("/author/show.xml",
                 Collections.singletonMap("id", authorId));
     }
 
-    public Response getAuthorSeries(int authorId) {
-        return new RequestController(requestSpecification).get(String.format("/series/list/%d.xml", authorId));
+    public Response getAuthorSeries(String authorId) {
+        return new RequestController(requestSpecification).get(String.format("/series/list/%s.xml", authorId));
     }
 
     public Response findBook(String searchText) {
@@ -40,8 +40,9 @@ public class GoodReadsAPI {
                 Collections.singletonMap("q", searchText));
     }
 
-    public Response getBookReviews(int bookId) {
+    public Response getBookReviews(String bookId) {
         return new RequestController(requestSpecification).get("/book/show.xml",
                 Collections.singletonMap("id", bookId));
     }
+
 }

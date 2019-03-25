@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GoodReadsTestListener implements ITestListener {
+
     private Map<String, String> methodDescriptions = new HashMap<>();
 
     @Override
@@ -53,4 +54,5 @@ public class GoodReadsTestListener implements ITestListener {
                 .ifPresent(entry ->
                         method.setDescription(String.format(entry.getValue(), testResult.getParameters())));
     }
+
 }
