@@ -3,6 +3,7 @@ package com.goodreads;
 import com.goodreads.allure.AllureEnvironmentController;
 import com.goodreads.api.API;
 import com.goodreads.dataproviders.GoodReadsDataProviderFactory;
+import com.goodreads.modules.APIModule;
 import com.goodreads.utils.listeners.GoodReadsTestListener;
 import com.goodreads.verification.ResponseVerification;
 import com.google.inject.Inject;

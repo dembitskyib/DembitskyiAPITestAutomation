@@ -1,4 +1,4 @@
-package com.goodreads;
+package com.goodreads.modules;
 
 import com.goodreads.api.API;
 import com.goodreads.api.GoodReadsAPI;
